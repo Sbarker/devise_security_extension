@@ -41,7 +41,7 @@ module Devise
 
       # archive the last password before save and delete all to old passwords from archive
       def archive_password
-        if self.encrypted_password_changed?
+        if self.encrypted_password_changed? and self.encrypted_password_was
           if self.class.password_archiving_count.to_i > 0
             if self.respond_to?(:password_salt_change) and not self.password_salt_change.nil?
               self.old_passwords.create! :encrypted_password => self.encrypted_password_change.first, :password_salt => self.password_salt_change.first
